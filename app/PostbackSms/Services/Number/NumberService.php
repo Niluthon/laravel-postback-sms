@@ -3,12 +3,19 @@
 namespace App\PostbackSms\Services\Number;
 
 use App\PostbackSms\Contracts\Number\NumberServiceInterface;
+use App\PostbackSms\Enums\Responses\ResponseCodeEnum;
+use App\PostbackSms\Exceptions\ApiCalls\ApiRequestException;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 
 class NumberService
 {
 
 
+    /**
+     * @throws GuzzleException
+     * @throws ApiRequestException
+     */
     public function test()
     {
         $guzzle = new \GuzzleHttp\Client(
@@ -25,7 +32,12 @@ class NumberService
             ]
         ]);
 
+        $json = json_decode($request->getBody(), true);
 
-        return $request->getBody()->getContents();
+        if ($json['code'] === ResponseCodeEnum::ERROR->value) {
+            throw new ApiRequestException($json['message']);
+        }
+
+        return $json;
     }
 }
