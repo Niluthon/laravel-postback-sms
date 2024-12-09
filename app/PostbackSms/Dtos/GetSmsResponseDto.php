@@ -6,18 +6,17 @@ use App\PostbackSms\Enums\Responses\ResponseCodeEnum;
 
 readonly final class GetSmsResponseDto
 {
-    public ResponseCodeEnum $responseCode;
+    public ResponseCodeEnum $code;
     public string $sms;
 
     /**
-     * @param ResponseCodeEnum $responseCode
+     * @param ResponseCodeEnum $code
      * @param string $sms
      */
-    public function __construct(ResponseCodeEnum $responseCode, string $sms)
+    public function __construct(ResponseCodeEnum $code, string $sms)
     {
-        $this->responseCode = $responseCode;
+        $this->code = $code;
         $this->sms = $sms;
     }
-
 
 }
