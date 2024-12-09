@@ -24,14 +24,13 @@ class GetNumberRequest extends FormRequest
      */
     public function rules(): array
     {
+        $this->mergeIfMissing(['rent_time' => null]);
+
         return [
-            "action" => ["required",
-                Rule::enum(TargetApiActionMethodEnum::class)
-                    ->only(TargetApiActionMethodEnum::GET_NUMBER)
-            ],
             "country" => ["required", "string"],
             "service" => ["required", "string"],
             "token" => ["required", "string"],
+            "rent_time" => ["nullable", "integer"],
         ];
     }
 }
