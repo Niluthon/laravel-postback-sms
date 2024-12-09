@@ -12,6 +12,6 @@ Route::group(
         $router->get('/getNumber', [NumberController::class, 'getNumber']);
         $router->get('/getSms', [NumberController::class, 'getSms']);
         $router->get('/getStatus', [NumberController::class, 'getStatus']);
-        $router->post('/cancelNumber', [NumberController::class, 'cancelNumber']);
+        $router->get('/cancelNumber', [NumberController::class, 'cancelNumber']);
     }
 );
