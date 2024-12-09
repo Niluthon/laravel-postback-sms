@@ -6,6 +6,7 @@ use App\Http\Requests\CancelNumberRequest;
 use App\Http\Requests\GetActivationStatusRequest;
 use App\Http\Requests\GetNumberRequest;
 use App\Http\Requests\GetSmsRequest;
+use App\PostbackSms\Contracts\Number\NumberServiceInterface;
 use App\PostbackSms\Dtos\CancelNumberResponseDto;
 use App\PostbackSms\Dtos\GetNumberResponseDto;
 use App\PostbackSms\Dtos\GetSmsResponseDto;
@@ -18,7 +19,7 @@ use Illuminate\Http\JsonResponse;
 class NumberController extends Controller
 {
     public function __construct(
-        private readonly NumberService $numberService
+        private readonly NumberServiceInterface $numberService
     ) {}
 
     /**
