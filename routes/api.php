@@ -10,5 +10,8 @@ Route::group(
     ['prefix' => 'v1'],
     function (Router $router) {
         $router->get('/getNumber', [NumberController::class, 'getNumber']);
+        $router->get('/getSms', [NumberController::class, 'getSms']);
+        $router->get('/getStatus', [NumberController::class, 'getStatus']);
+        $router->post('/cancelNumber', [NumberController::class, 'cancelNumber']);
     }
 );
