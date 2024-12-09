@@ -6,19 +6,14 @@ use App\Http\Requests\CancelNumberRequest;
 use App\Http\Requests\GetActivationStatusRequest;
 use App\Http\Requests\GetNumberRequest;
 use App\Http\Requests\GetSmsRequest;
-use App\PostbackSms\Attributes\HttpClientAttribute;
 use App\PostbackSms\Dtos\CancelNumberResponseDto;
 use App\PostbackSms\Dtos\GetNumberResponseDto;
 use App\PostbackSms\Dtos\GetSmsResponseDto;
-use App\PostbackSms\Dtos\GetStatusResponseDto;
-use App\PostbackSms\Enums\Responses\ResponseCodeEnum;
+use App\PostbackSms\Dtos\GetActivationStatusResponseDto;
 use App\PostbackSms\Exceptions\ApiCalls\ApiRequestException;
 use App\PostbackSms\Services\Number\NumberService;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Js;
 
 class NumberController extends Controller
 {
@@ -86,7 +81,7 @@ class NumberController extends Controller
 
     /**
      * @param GetActivationStatusRequest $request
-     * @return JsonResponse<GetStatusResponseDto
+     * @return JsonResponse<GetActivationStatusResponseDto>
      */
     public function getStatus(GetActivationStatusRequest $request): JsonResponse
     {
