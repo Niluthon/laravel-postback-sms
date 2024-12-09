@@ -7,20 +7,20 @@ use DateTime;
 
 readonly final class GetStatusResponseDto
 {
-    public ResponseCodeEnum $responseCode;
+    public ResponseCodeEnum $code;
     public string $status;
     public int $count_sms;
     public DateTime $end_rend_date;
 
     /**
-     * @param ResponseCodeEnum $responseCode
+     * @param ResponseCodeEnum $code
      * @param string $status
      * @param int $count_sms
      * @param DateTime $end_rend_date
      */
-    public function __construct(ResponseCodeEnum $responseCode, string $status, int $count_sms, DateTime $end_rend_date)
+    public function __construct(ResponseCodeEnum $code, string $status, int $count_sms, DateTime $end_rend_date)
     {
-        $this->responseCode = $responseCode;
+        $this->code = $code;
         $this->status = $status;
         $this->count_sms = $count_sms;
         $this->end_rend_date = $end_rend_date;
