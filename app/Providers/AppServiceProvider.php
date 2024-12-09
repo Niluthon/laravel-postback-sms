@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\PostbackSms\Contracts\Number\NumberServiceInterface;
+use App\PostbackSms\Services\Number\NumberService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->scoped(NumberServiceInterface::class, NumberService::class);
     }
 
     /**
