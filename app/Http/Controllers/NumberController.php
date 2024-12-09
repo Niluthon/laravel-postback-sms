@@ -2,9 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CancelNumberRequest;
+use App\Http\Requests\GetActivationStatusRequest;
 use App\Http\Requests\GetNumberRequest;
+use App\Http\Requests\GetSmsRequest;
+use App\PostbackSms\Attributes\HttpClientAttribute;
+use App\PostbackSms\Dtos\CancelNumberResponseDto;
+use App\PostbackSms\Dtos\GetNumberResponseDto;
+use App\PostbackSms\Dtos\GetSmsResponseDto;
+use App\PostbackSms\Dtos\GetStatusResponseDto;
+use App\PostbackSms\Enums\Responses\ResponseCodeEnum;
 use App\PostbackSms\Exceptions\ApiCalls\ApiRequestException;
 use App\PostbackSms\Services\Number\NumberService;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,29 +26,81 @@ class NumberController extends Controller
         private readonly NumberService $numberService
     ) {}
 
-    public function getNumber(): JsonResponse
+    /**
+     * @param GetNumberRequest $request
+     * @return JsonResponse<GetNumberResponseDto>
+     */
+    public function getNumber(GetNumberRequest $request): JsonResponse
     {
+        $validated = $request->validated();
+
         try {
-            return response()->json($this->numberService->test());
-        } catch (ApiRequestException $exception) {
+            return response()->json($this->numberService->getNumber(...$validated));
+        }
+        catch (ApiRequestException $exception) {
             return response()->json(['error' => $exception->getMessage()])->setStatusCode(400);
-        } catch (GuzzleException $e) {
+        }
+        catch (GuzzleException $e) {
             return response()->json(['error' => $e->getMessage()])->setStatusCode(400);
         }
     }
 
-    public function getSms(): JsonResponse
+    /**
+     * @param GetSmsRequest $request
+     * @return JsonResponse<GetSmsResponseDto>
+     */
+    public function getSms(GetSmsRequest $request): JsonResponse
     {
+        $validated = $request->validated();
+
+        try {
+            return response()->json($this->numberService->getSms(...$validated));
+        }
+        catch (ApiRequestException $exception) {
+            return response()->json(['error' => $exception->getMessage()])->setStatusCode(400);
+        }
+        catch (GuzzleException $e) {
+            return response()->json(['error' => $e->getMessage()])->setStatusCode(400);
+        }
+    }
+
+    /**
+     * @param CancelNumberRequest $request
+     * @return JsonResponse<CancelNumberResponseDto>
+     */
+    public function cancelNumber(CancelNumberRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        try {
+            return response()->json($this->numberService->cancelNumber(...$validated));
+        }
+        catch (ApiRequestException $exception) {
+            return response()->json(['error' => $exception->getMessage()])->setStatusCode(400);
+        }
+        catch (GuzzleException $e) {
+            return response()->json(['error' => $e->getMessage()])->setStatusCode(400);
+        }
 
     }
 
-    public function cancelNumber(): JsonResponse
+    /**
+     * @param GetActivationStatusRequest $request
+     * @return JsonResponse<GetStatusResponseDto
+     */
+    public function getStatus(GetActivationStatusRequest $request): JsonResponse
     {
+        $validated = $request->validated();
 
-    }
-
-    public function getStatus(): JsonResponse
-    {
+        try {
+            return response()->json($this->numberService->getActivationStatus(...$validated));
+        }
+        catch (ApiRequestException $exception) {
+            return response()->json(['error' => $exception->getMessage()])->setStatusCode(400);
+        }
+        catch (GuzzleException $e) {
+            return response()->json(['error' => $e->getMessage()])->setStatusCode(400);
+        }
 
     }
 }
